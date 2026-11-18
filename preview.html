@@ -1,0 +1,742 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Passenger Travel Information | Health Declarations</title>
+
+<style>
+/* ==========================================
+   BENNION-TECH CUSTOM SETTINGS
+   EDIT THESE VALUES TO CUSTOMIZE YOUR PAGE
+========================================== */
+
+:root {
+    --primary-color: #c91f35;
+    --background-color: #f4f5f7;
+    --card-color: #ffffff;
+    --text-color: #202124;
+    --muted-color: #686868;
+    --border-color: #e2e2e2;
+
+    /* BACKGROUND IMAGE
+       Replace with your image URL or uploaded file path.
+       Example: url('background.jpg')
+       To remove image: none
+    */
+    --background-image: none;
+
+    /* Background image visibility */
+    --background-overlay: rgba(244,245,247,0.88);
+}
+
+/* ==========================================
+   GENERAL PAGE STYLING
+========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+
+    background-image:
+        linear-gradient(
+            var(--background-overlay),
+            var(--background-overlay)
+        ),
+        var(--background-image);
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+    padding: 35px 16px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+/* ==========================================
+   MAIN HEADER
+========================================== */
+
+.header {
+    background: var(--card-color);
+    border-radius: 25px;
+    border-top: 10px solid var(--primary-color);
+    padding: 65px 45px 45px;
+    margin-bottom: 45px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+/* Optional logo image */
+.logo img {
+    max-width: 230px;
+    max-height: 85px;
+    object-fit: contain;
+}
+
+/* Text logo if no image is supplied */
+.logo-text {
+    color: var(--primary-color);
+    font-size: 25px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.logo-subtitle {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #333;
+}
+
+.header-divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin-bottom: 40px;
+}
+
+.eyebrow {
+    color: var(--primary-color);
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 43px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 22px;
+}
+
+.header-description {
+    color: var(--muted-color);
+    font-size: 21px;
+    line-height: 1.65;
+}
+
+/* ==========================================
+   INTRODUCTION
+========================================== */
+
+.intro {
+    color: var(--muted-color);
+    font-size: 18px;
+    line-height: 1.65;
+    margin-bottom: 42px;
+}
+
+/* ==========================================
+   SEARCH SECTION
+========================================== */
+
+.search-label {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.search-box {
+    width: 100%;
+    padding: 22px 25px;
+    border: 1px solid #d7d7d7;
+    border-radius: 18px;
+    background: white;
+    font-size: 19px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.search-box:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(201,31,53,0.08);
+}
+
+.destination-count {
+    color: var(--muted-color);
+    margin: 18px 4px 35px;
+    font-size: 15px;
+}
+
+/* ==========================================
+   DESTINATION CARDS
+========================================== */
+
+.destination-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.destination-card {
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: 22px;
+    padding: 23px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: var(--text-color);
+    min-height: 105px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.025);
+    transition: all 0.25s ease;
+}
+
+.destination-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 18px rgba(0,0,0,0.07);
+}
+
+.destination-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.flag {
+    font-size: 33px;
+    min-width: 48px;
+}
+
+.country-name {
+    font-size: 21px;
+    font-weight: 600;
+}
+
+.country-code {
+    display: block;
+    color: var(--muted-color);
+    font-size: 12px;
+    margin-top: 7px;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.external-link {
+    color: var(--primary-color);
+    font-size: 31px;
+    font-weight: bold;
+}
+
+.no-results {
+    display: none;
+    text-align: center;
+    padding: 35px;
+    color: var(--muted-color);
+    background: white;
+    border-radius: 15px;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer {
+    text-align: center;
+    margin-top: 65px;
+    padding: 40px 10px 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-note {
+    color: var(--muted-color);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+}
+
+.copyright {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.disclaimer {
+    color: var(--muted-color);
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS
+========================================== */
+
+@media(max-width: 600px) {
+
+    body {
+        padding: 25px 16px;
+    }
+
+    .header {
+        padding: 55px 28px 40px;
+        margin-bottom: 40px;
+    }
+
+    .logo {
+        margin-bottom: 85px;
+    }
+
+    .header h1 {
+        font-size: 36px;
+    }
+
+    .header-description {
+        font-size: 18px;
+    }
+
+    .eyebrow {
+        font-size: 13px;
+    }
+
+    .destination-card {
+        min-height: 100px;
+        padding: 20px 22px;
+    }
+
+    .country-name {
+        font-size: 19px;
+    }
+
+    .flag {
+        font-size: 29px;
+    }
+
+    .intro {
+        font-size: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =================================
+         HEADER
+    ================================== -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <!-- OPTIONAL LOGO IMAGE
+                 Add your logo URL below.
+                 Leave empty to use text logo.
+            -->
+
+            <div id="logoArea">
+                <div class="logo-text">Kenya Airways</div>
+                <div class="logo-subtitle">The Pride of Africa</div>
+            </div>
+
+        </div>
+
+        <hr class="header-divider">
+
+        <div class="eyebrow">
+            PASSENGER TRAVEL INFORMATION
+        </div>
+
+        <h1>Health Declaration Forms</h1>
+
+        <p class="header-description">
+            Select your destination country to open its declaration
+            or traveller health website.
+        </p>
+
+    </header>
+
+
+    <!-- =================================
+         INTRODUCTION
+    ================================== -->
+
+    <p class="intro">
+        Use the relevant country link below. Forms and entry
+        requirements may change; follow the instructions on the
+        official website.
+    </p>
+
+
+    <!-- =================================
+         SEARCH
+    ================================== -->
+
+    <label class="search-label" for="countrySearch">
+        Find your destination
+    </label>
+
+    <input
+        type="text"
+        id="countrySearch"
+        class="search-box"
+        placeholder="Search a country..."
+        autocomplete="off"
+    >
+
+    <p class="destination-count" id="destinationCount">
+        19 destinations available
+    </p>
+
+
+    <!-- =================================
+         DESTINATIONS
+         EDIT LINKS, FLAGS AND CODES HERE
+    ================================== -->
+
+    <div class="destination-list" id="destinationList">
+
+        <a class="destination-card"
+           href="https://afyamsafiri.moh.go.tz"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇹🇿</span>
+                <div>
+                    <div class="country-name">Tanzania</div>
+                    <span class="country-code">TIMATIC: TZA</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://healthtravelznz.mohz.go.tz"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇹🇿</span>
+                <div>
+                    <div class="country-name">Zanzibar</div>
+                    <span class="country-code">TIMATIC DESTINATION: ZNZ</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://healthapp.ncdc.gov.ng/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇳🇬</span>
+                <div>
+                    <div class="country-name">Nigeria</div>
+                    <span class="country-code">TIMATIC: NGA</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://airsuvidha.civilaviation.gov.in/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇮🇳</span>
+                <div>
+                    <div class="country-name">India</div>
+                    <span class="country-code">TIMATIC: IND</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://pnhf.anicns.cd/voyageur"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇨🇩</span>
+                <div>
+                    <div class="country-name">DR Congo</div>
+                    <span class="country-code">TIMATIC: COD</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://tdac.immigration.go.th/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇹🇭</span>
+                <div>
+                    <div class="country-name">Thailand</div>
+                    <span class="country-code">TIMATIC: THA</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://porthealth.dhmis.org/travel/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇿🇦</span>
+                <div>
+                    <div class="country-name">South Africa</div>
+                    <span class="country-code">TIMATIC: ZAF</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://e-thtp.ephi.gov.et/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇪🇹</span>
+                <div>
+                    <div class="country-name">Ethiopia</div>
+                    <span class="country-code">TIMATIC: ETH</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://poe.health.gov.mw/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇲🇼</span>
+                <div>
+                    <div class="country-name">Malawi</div>
+                    <span class="country-code">TIMATIC: MWI</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://attestation.kenya-airways.com/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇺🇸</span>
+                <div>
+                    <div class="country-name">JFK (USA)</div>
+                    <span class="country-code">TIMATIC DESTINATION: JFK</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://poes.health.go.ug/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇺🇬</span>
+                <div>
+                    <div class="country-name">Uganda</div>
+                    <span class="country-code">TIMATIC: UGA</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://safemauritius.govmu.org/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇲🇺</span>
+                <div>
+                    <div class="country-name">Mauritius</div>
+                    <span class="country-code">TIMATIC: MUS</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://enketo.afro.who.int/x/tQGIObnA"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇰🇲</span>
+                <div>
+                    <div class="country-name">Comoros</div>
+                    <span class="country-code">TIMATIC: COM</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://destinationci.com/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇿🇲</span>
+                <div>
+                    <div class="country-name">Zambia</div>
+                    <span class="country-code">TIMATIC: ZMB</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://s.nia.gov.cn/ArrivalCardFillingPC/entry-registation-home"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇨🇳</span>
+                <div>
+                    <div class="country-name">China</div>
+                    <span class="country-code">TIMATIC: CHN</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://destinationci.com/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇨🇮</span>
+                <div>
+                    <div class="country-name">Côte d’Ivoire (Ivory Coast)</div>
+                    <span class="country-code">TIMATIC: CIV</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://poep.npha.gov.sl/"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇸🇱</span>
+                <div>
+                    <div class="country-name">Sierra Leone</div>
+                    <span class="country-code">TIMATIC: SLE</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://ee-eu.kobotoolbox.org/x/O2BFsXoG"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇧🇮</span>
+                <div>
+                    <div class="country-name">Burundi</div>
+                    <span class="country-code">TIMATIC: BDI</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+        <a class="destination-card"
+           href="https://ulendo.mohcc.gov.zw/traveller-declaration"
+           target="_blank" rel="noopener noreferrer">
+            <div class="destination-info">
+                <span class="flag">🇿🇼</span>
+                <div>
+                    <div class="country-name">Zimbabwe</div>
+                    <span class="country-code">TIMATIC: ZWE</span>
+                </div>
+            </div>
+            <span class="external-link">↗</span>
+        </a>
+
+    </div>
+
+    <div class="no-results" id="noResults">
+        No matching destination found.
+    </div>
+
+
+    <!-- =================================
+         FOOTER
+    ================================== -->
+
+    <footer class="footer">
+
+        <p class="footer-note">
+            Choose the destination carefully and verify current
+            entry requirements with the relevant official authority.
+        </p>
+
+        <!-- CHANGE COPYRIGHT TEXT HERE -->
+
+        <p class="copyright" id="copyright">
+            © 2026 Bennion-tech. All rights reserved.
+        </p>
+
+        <p class="disclaimer">
+            Independent passenger information page. Not an official
+            Kenya Airways website. The Kenya Airways name and logo
+            belong to their respective owner.
+        </p>
+
+    </footer>
+
+</div>
+
+
+<!-- ==========================================
+     SEARCH FUNCTIONALITY
+========================================== -->
+
+<script>
+
+const searchInput = document.getElementById("countrySearch");
+const destinationCards = document.querySelectorAll(".destination-card");
+const destinationCount = document.getElementById("destinationCount");
+const noResults = document.getElementById("noResults");
+
+searchInput.addEventListener("input", function() {
+
+    const searchValue = this.value.toLowerCase().trim();
+
+    let visibleCount = 0;
+
+    destinationCards.forEach(function(card) {
+
+        const countryName =
+            card.querySelector(".country-name").textContent.toLowerCase();
+
+        const countryCode =
+            card.querySelector(".country-code").textContent.toLowerCase();
+
+        const matches =
+            countryName.includes(searchValue) ||
+            countryCode.includes(searchValue);
+
+        card.style.display = matches ? "flex" : "none";
+
+        if (matches) {
+            visibleCount++;
+        }
+
+    });
+
+    destinationCount.textContent =
+        visibleCount + " destinations available";
+
+    noResults.style.display =
+        visibleCount === 0 ? "block" : "none";
+
+});
+
+</script>
+
+</body>
+</html>
